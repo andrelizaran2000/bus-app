@@ -1,10 +1,10 @@
 // Modules
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 // Api
 import { 
-  loginApi
+  loginApi, validateTokenApi
 } from '../api/login';
 
 export default function useLoginQueries() {
@@ -28,9 +28,23 @@ export default function useLoginQueries() {
     navigation('/')
   }
 
+  function validateToken (isPrivateRoute:boolean) {
+    return useQuery(['validate-token'], validateTokenApi, {
+      onSuccess: ({ data }) => {
+        localStorage.setItem('bus-token', data.token);
+        !isPrivateRoute && navigation('/home')
+      },
+      onError: (error) => {
+        localStorage.removeItem('bus-token');
+        navigation('/');
+      }
+    })
+  }
+
   return {
     loginQuery,
-    logOut
+    logOut,
+    validateToken
   }
   
 }

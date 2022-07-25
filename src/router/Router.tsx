@@ -6,9 +6,12 @@ import {
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Containers
+import PublicRoute from './PublicRoute';
+import PrivateRoute from './PrivateRoute';
 import SnackbarContainer from '../components/containers/SnackbarContainer';
 
 // Screens
+import Home from '../screens/Home';
 import Login from '../screens/Login';
 
 export default function Router() {
@@ -20,8 +23,8 @@ export default function Router() {
       <SnackbarContainer>
         <BrowserRouter>
           <Routes>
-            <Route path='/' element={<Login/>}>
-          </Route>
+            <Route path='/' element={<PublicRoute><Login/></PublicRoute>}/>
+            <Route path='/home' element={<PrivateRoute><Home/></PrivateRoute>}/>
           </Routes>
         </BrowserRouter>
       </SnackbarContainer>

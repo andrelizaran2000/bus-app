@@ -1,5 +1,5 @@
 // Axios
-import { axiosInstance } from '../utils/axios';
+import { axiosInstance, axiosInstanceWithValidation } from '../utils/axios';
 
 export type LoginApiPayload = {
   userName:string;
@@ -12,4 +12,8 @@ export type LoginApiResponse = {
 
 export function loginApi (payload:LoginApiPayload) {
   return axiosInstance.post<LoginApiResponse>('/login', payload);
+}
+
+export function validateTokenApi () {
+  return axiosInstanceWithValidation.get('/login/validate-token');
 }
